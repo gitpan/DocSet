@@ -35,13 +35,11 @@ DESCRIPTION
     * HTML * PS * PDF
 
   Modification control
-
     Each output mode maintains its own cache (per docset) which is used when
     certain source documents weren't modified since last build and the build
     is running in a non-force-rebuild mode.
 
   Definitions:
-
     * Chapter is a single document (file).
 
     * Link is an URL
@@ -49,7 +47,6 @@ DESCRIPTION
     * Docset is a collection of docsets, chapters and links.
 
   Application Specific Features
-
     1   META: not ported yet!
 
         Generate a split version HTML, creating html file for each pod
@@ -68,7 +65,6 @@ DESCRIPTION
         tag.
 
   Examples
-
     The package includes two fully working examples in the *examples/*
     directory.
 
@@ -85,7 +81,6 @@ DESCRIPTION
         information.
 
   Look-n-Feel Customization
-
     You can customise the look and feel of the ouput by adjusting the
     templates in the directory *examples/site/tmpl/custom*.
 

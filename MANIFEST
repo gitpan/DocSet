@@ -249,3 +249,4 @@ lib/DocSet/Template/Plugin/NavigateCache.pm
 lib/DocSet/Util.pm
 
 
+META.yml                                Module meta-data in YAML

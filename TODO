@@ -2,6 +2,11 @@ DocSet::* TODO list
 
 ### general todo ###
 
+- Need to improve the link checker to verify the #anchors. For that we
+  need to port the previous system, where when headers are parsed they
+  are also stored in some db (dbm file?) and then can be verified for
+  existence with L<> is called.
+
 - need a new attribute which points to the current docset root, so
   even if we are in 'index.html' it will still point to
   '.'. cur_docset_rel_dir? which is simply doc.dir.rel_doc_root in the

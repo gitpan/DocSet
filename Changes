@@ -2,6 +2,16 @@
 
 Changes
 
+=head1 0.16 Wed Apr 30 10:49:15 EST 2003
+
+- set $DocSet::5005compat::VERSION explicitly as previous workarounds
+  to make EU::MM::parse_version not complain have failed.
+
+- if the cache read fails, rebuild the docset as if the cache file
+  didn't exist (to solve the Storable binary incompatibilities probs)
+
+- purge cache files when the rebuild is forced 
+
 =head1 0.15 Mon Nov 25 10:32:27 SGT 2002
 
 - fix a missing dependency: the modified() is set for the index.html

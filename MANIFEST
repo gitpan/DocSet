@@ -167,7 +167,7 @@ examples/site/tmpl/std/html/table
 examples/site/tmpl/std/html/rgb
 examples/site/tmpl/std/html/row
 examples/site/.cvsignore
-examples/presentation/abstract.txt
+examples/presentation/src/abstract.txt
 examples/presentation/bin/build
 examples/presentation/bin/docset_build
 examples/presentation/bin/.cvsignore

@@ -29,7 +29,9 @@ sub scan {
     note "+++ Scanning $self->{src_uri}";
     $self->src_read();
 
-    $self->retrieve_meta_data();
+    if (my $sub = $self->can('retrieve_meta_data')) {
+        $self->$sub();
+    }
 }
 
 sub render {
@@ -164,8 +166,9 @@ C<DocSet::Doc> - A Base Document Class
 
 =head1 SYNOPSIS
 
-   use DocSet::Doc::HTML ();
-   my $doc = DocSet::Doc::HTML->new(%args);
+   # e.g. a subclass would do
+   use DocSet::Doc::HTML2HTML ();
+   my $doc = DocSet::Doc::HTML2HTML->new(%args);
    $doc->scan();
    my $meta = $doc->meta();
    my $toc  = $doc->toc();

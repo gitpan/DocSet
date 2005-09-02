@@ -2,12 +2,28 @@
 
 Changes
 
+=head1 0.18 Fri Sep  2 12:24:27 PDT 2005
+
+- a few style fixes [Philip M. Gollucci <pgollucci@p6m7g8.com>]
+
+- fix DocSet::Doc::POD2HTML::View::HTMLPS not to anchor =headX titles,
+  since when rendering ps/pdf, some interpreters fail to render a
+  proper link, leaving some ugly misplaced link frame. That link was
+  pointing nowhere anyway, so it's a good thing it is gone.
+
+- synced with html2ps changes html2ps-1.0b4 which was surprisingly
+  updated 5 years later.
+
+
+
 =head1 0.17 Sat Nov 20 00:27:32 EST 2004
 
 - inherit the 'copy_skip' attribute if not set in the child
 
 - fix fetch_pdf_doc_ver not to try to copy the pdf version of the
-document to the same directory.
+  document to the same directory.
+
+
 
 =head1 0.16 Wed Apr 30 10:49:15 EST 2003
 
@@ -18,6 +34,8 @@ document to the same directory.
   didn't exist (to solve the Storable binary incompatibilities probs)
 
 - purge cache files when the rebuild is forced 
+
+
 
 =head1 0.15 Mon Nov 25 10:32:27 SGT 2002
 
@@ -32,6 +50,8 @@ document to the same directory.
   ExtUtils::MakeMaker v < 6.00, which tries to parse any word which
   include VERSION in it, which causes problems when you do 'r' in
   CPAN.pm. Thanks to Mark Veltzer for reporting the problem.
+
+
 
 =head1 0.14 Mon Aug 19 14:29:36 SGT 2002
 
@@ -116,6 +136,8 @@ document to the same directory.
   split it into 40 lines chunks.
 
 - sitemap is now correctly highlighted in the menu when selected
+
+
 
 =head1 0.13 Fri May 10 02:53:53 SGT 2002
 
@@ -207,6 +229,8 @@ document to the same directory.
   not tried to be opened. So I replaced \ with /, as that'll open the
   file correctly. [Per Einar Ellefsen <per.einar@skynet.be>]
 
+
+
 =head1 0.12 Thu Mar 28 10:20:07 SGT 2002
 
 - add code that parses source HTML and escapes unsafe URI/HTML chars
@@ -244,6 +268,8 @@ document to the same directory.
 - don't gzip the source and pdf docs anymore, it makes things harder
   on the users. so what that they have to download a bit more...
 
+
+
 =head1 0.11 Mon Feb 4 18:37:38 SGT 2002
 
 - fix DocSet::Util::copy_file to preserve file
@@ -268,6 +294,8 @@ document to the same directory.
   the left cell being a vertical line. To make the pre sections stand
   out.
 
+
+
 =head1 0.10 Thu Jan 31 00:54:33 SGT 2002
 
 - fix a bug where hidden chapters were added to the generated PDFs.
@@ -284,6 +312,8 @@ document to the same directory.
 
   so now in templates we have doc.meta.abstract if provided by the
   source doc.
+
+
 
 =head1 0.09 Fri Jan 25 01:57:22 SGT 2002
 
@@ -320,6 +350,8 @@ document to the same directory.
   former is for use in the menu and nav bars, stands for 'short
   title'.
 
+
+
 =head1 0.08 Sun Jan  6 04:26:23 SGT 2002
 
 - add perl-5.00503 compat layer (warnings.pm doesn't exist). DocSet is
@@ -330,6 +362,8 @@ document to the same directory.
 - resolve relative URLs into full ones without any ../.., since the
   app must work with full pathes while building things. (some perl
   versions have problems if the paths aren't full).
+
+
 
 =head1 0.07 Sat Jan  5 22:31:53 SGT 2002
 
@@ -346,6 +380,8 @@ document to the same directory.
 - Now certain chapters and docsets can be marked as hidden, they will
   be normally processed, but not linked from other pages.
 
+
+
 =head1 0.06 Mon Nov 26 11:19:03 SGT 2001
 
 - calls src_filter hook only if defined in the converter class
@@ -356,6 +392,8 @@ document to the same directory.
 - bug fix in HTML2HTML (src_filter wasn't declared)
 
 - split pod on /\n\n/ not /\n\s*\n/
+
+
 
 =head1 0.05 Fri Nov 23 11:20:48 SGT 2001
 
@@ -372,11 +410,15 @@ document to the same directory.
 - added prerequisites:
   'Template' => '2.0',
 
+
+
 =head1 0.04 Wed Nov 21 10:00:07 SGT 2001
 
 - added prerequisites:
    'HTML::Parser' => '3.25',
    'Pod::POM'     => '0.02',
+
+
 
 =head1 0.03 Wed Nov 14 00:11:56 SGT 2001
 
@@ -384,6 +426,8 @@ document to the same directory.
   DocSet/DocSet/HTML.pm
 
 - minor templates fixes
+
+
 
 =head1 0.02 Thu Nov  8 03:33:23 SGT 2001
 
@@ -432,6 +476,8 @@ document to the same directory.
   added before and after the automatically generated toc. if these
   docs are for example in HTML, they have to be written in a proper
   html, so the parser will be able to extract the body.
+
+
 
 =head1 0.01 Tue Nov  6 03:30:23 SGT 2001
 

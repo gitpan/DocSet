@@ -5,7 +5,7 @@ use strict;
 
 BEGIN {
     # RCS/CVS compliant:  must be all one line, for MakeMaker
-  $DB_File::Lock2::VERSION = do { my @r = (q$Revision: 1.1 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
+  $DB_File::Lock2::VERSION = do { my @r = (q$Revision: 777 $ =~ /\d+/g); sprintf "%d."."%02d" x $#r, @r };
 
 }
 

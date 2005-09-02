@@ -1,24 +1,22 @@
-#!perl
+: # Use perl
 eval 'exec perl -S $0 "$@"'
   if $running_under_some_shell;
 
 #######################################################################
 # Sun Jun  4 00:35:58 IDT 2000
 # Comments by Stas Bekman <stas@stason.org>:
-# 
+#
 # This package was last seen at http://www.tdb.uu.se/~jan/html2ps.html.
 # The software wasn't developed anymore, none of my patches were accepted
 # therefore I've forked it and add all the patches to this version.
-#  
+#
 # Currently it's distributed as a component of the bigger package under
 # the same license as Perl or GNU GPL, whichever you prefer.
 #
 # The original header/license is present on the next lines
 #######################################################################
 
-#######################################################################
-
-# This is html2ps version 1.0 beta3, an HTML-to-PostScript converter.
+# This is html2ps version 1.0 beta4, an HTML-to-PostScript converter.
 #   Copyright (C) 1995-2000 Jan Karrman.
 #
 #   This program is free software; you can redistribute it and/or modify
@@ -37,16 +35,14 @@ eval 'exec perl -S $0 "$@"'
 #
 # Author: Jan Karrman, Dept. of Scientific Computing, Uppsala University,
 #         Sweden, e-mail: jan@tdb.uu.se.
-#######################################################################
 
 
 # Set the name of the global configuration file. See the installation notes
 # and manual page for more details on configuration files.
 
-#$globrc='/usr/local/lib/html2ps/html2psrc';
+# stas:
 use FindBin qw($Bin);
 use lib $Bin;
-
 $globrc="$Bin/html2ps-global.conf";
 $ug='/usr/local/lib/html2ps/html2ps.html';
 
@@ -62,7 +58,6 @@ $conf=<<'EOR';
     TeX: 0;
     dvips: 0;
     libwww-perl: 0;
-    jfriedl: 0;
     geturl: "";
     check: "";
     path: "";
@@ -397,7 +392,7 @@ $space=join('|',keys %space);
  "archb",30.5, "archa",22.9, "flsa",21.6, "flse",21.6, "halfletter",14,
  "11x17",27.9, "ledger",43.2);
 
-$version="html2ps version 1.0 beta3";
+$version="html2ps version 1.0 beta4";
 $opts="2|b:|c|C:|d|D|e:|f:|F|g|h|H|i:|k:|l:|L|m:|n|N:|o:|O|r:|R|s:|S:|t|T|u|"
  ."U|v|W:|x:";
 %optalias=( 'twoup','2', 'base','b', 'check','c', 'toc','C', 'debug','d',
@@ -441,16 +436,15 @@ for(@fo,"draft") {
       ."\$$_\{'font-family'\}:\$body{'font-family'}";
 }
 $user=1;
-if(open(RC,$globrc)) {
+if(open(RC,"<$globrc")) {
   $conf=<RC>;
   print DBG "***** Global file $globrc:\n$conf" if($opt_d);
   &getconf($conf);
   close RC;
 } else {
-# stas: temporarily commented out, since I don't know where this file
-# will be installed on user's system. -- should solve this.
-#  &dbg("Warning: cannot open the global resource file: $globrc\n") if($globrc);
-
+    # stas: temporarily commented out, since I don't know where this file
+    # will be installed on user's system. -- should solve this.
+    #&dbg("Warning: cannot open the global resource file: $globrc\n") if($globrc);
 }
 $html2psrc=~s/^(~|\$HOME)/$ENV{"HOME"}/;
 $prc=$html2psrc;
@@ -484,7 +478,7 @@ for $rc (@rc) {
   S:for $dir (@hpath) {
     if(-r $rc && !grep(/^$rc$/,@local) || $files{$dir}=~/ $rc /) {
       chdir $dir if($files{$dir}=~/ $rc / && $cwd);
-      if(open(RC,$rc)) {
+      if(open(RC,"<$rc")) {
         $conf=<RC>;
         print DBG "***** Personal file $rc:\n$conf" if($opt_d);
         &getconf($conf);
@@ -1047,7 +1041,7 @@ $fl="/FL [/".join("\n/",@docfonts)."] D";
 for $k (keys %ff) {
   $f=$ff{$k};
   if(defined $fontid{$fr{$k}} && !defined($cont{$f})) {
-    open(FONT,$f) || &dbg("Error opening fontfile $f\n");
+    open(FONT,"<$f") || &dbg("Error opening fontfile $f\n");
     ($cont{$f}=<FONT>)=~s/(^|\r?\n|\r)%.*//g;
     close FONT;
   }
@@ -1184,7 +1178,7 @@ $yz
 /FE {newpath Fm neg Fm M CP BB IW Fm add Fm L IW Fm add IL Fm add neg L CP BB
  Fm neg IL Fm add neg L closepath} D
 /LA {PM 0 eq{/IW Wl D /IL hL D}{/IW Wr D /IL hR D}ie /W IW D /LL W D /LS W D
- /LE IL D TU PM 0 eq and{IW $mm F div add SA{Sf div}if 0 translate}
+ TU PM 0 eq and{IW $mm F div add SA{Sf div}if 0 translate}
  {PM 0 eq{xL yL}{xR yR}ie translate$rot F SA{Sf mul}if dup scale
  CS CF FS Cf{CA CL get VC}if /Bb f D}ie 0 0 M
  TF not Tc or {Cf{gsave SA{1 Sf div dup scale}if Cb VC FE fill grestore}if}if}D
@@ -1599,7 +1593,7 @@ $defs$fontdef$reenc
 /Ld {/DN E D HN DN Pn put [/View [/XYZ -4 Fl{PS}{CP YA add US E pop}ie null]
  /Dest DN ST cvs cvn /DEST pdfmark} D
 /C {ND 1 eq{1 sub}if TI mul /XO E D NL Nf not{pop()}if 0 3 -1 roll 1 A} D
-/OP {BP not{NP}if PN 2 mod 0 eq{NP}if}D
+/OP {BP not{NP}if PN 2 mod 0 eq{/Ms t D NP}if}D
 /Ep {Xp PN 2 mod 0 eq and OU and{/Pn (-) D showpage /PM 1 D LA}if}D
 /Dg [73 86 88 76 67 68 77] D
 /Rd [0 [1 1 0][2 1 0][3 1 0][2 1 1][1 1 1][2 2 1][3 3 1][4 4 1][2 1 2]] D
@@ -1630,6 +1624,7 @@ $defs$fontdef$reenc
  Fi cH 1 eq and{fill}if} {0 -5 R Bz 0 RL 0 21 RL Bz neg 0 RL 0 -21 RL}]} D
 /MS {/Sm E D WB}D
 /O {BN()Sm BX} D
+/O {BN()0 Sm BX} D
 /BX {/Bt E D Bt 2 lt{/Ch E D CS 0.8 mul}{11 mul}ie W XO sub MR sub
  2 copy gt{E}if pop /HZ E D Bt 2 eq{Fi not{pop()}if ( )E join /Ft E D TT
  /PF t D /MW 1 D /Li 1 D /Fw Ft SW pop D Fw HZ gt{/HZ Fw 8 add D}if
@@ -1930,7 +1925,7 @@ $tbl=<<EOT;
    }for
   }for M RC %ZF
   /thight 0 D /racc 0 D /maxh 0 D /brk 0 D /rbeg nhead nfoot add D
-  rbeg 1 nrow{
+  0 1 nrow{
    rdesc E get dup 0 get dup /thight E thight add D
    brk 0 eq{/racc E D}{/racc E racc add D}ie
    racc maxh gt{/maxh racc D}if 2 get /brk E D
@@ -2124,7 +2119,7 @@ $nrem=0;
 $toc=$first?"Pt\n":"";
 $toc.="/BO 0 D TC /Ba f D Bs /AU f D /UR () D RC ZF\n";
 $toc.="()F2" if(!$latin1);
-$toc.="tH WB\n" if(!$tocdoc);
+$toc.=" tH WB\n" if(!$tocdoc);
 $fl1="";
 $fl2="";
 $np="NP RC ZF";
@@ -2192,16 +2187,16 @@ while($html=shift @docs) {
       $'=~/\)EH/;
       ($htxt=$hst.$`)=~s/\)EA\(//g;
       if(!$tocdoc) {
-        $toc.="$hv NH le{$nref($hind\\020\\020)$hv C($htxt)$nref 1 TN()EA()BN}if\n";
+        $toc.="$hv NH le{$nref($hind\\240\\240)$hv C($htxt)$nref 1 TN()EA()BN}if\n";
       }
       push(@z1,$nref);
       push(@z2,$hv);
       $nref++;
       $htxt=~s/(\s+|\)BR\()/ /g;
       $htxt=~s/(^\s+|\)[^(]*\(|\s+$)//g;
+      $htxt=~s/\\(200|201|202)/\\$ssy{$1}/g;
       $htxt="" if(!$latin1);
-# GB/STAS: Added to allow balanced parens inside ToC headers
-      while ($htxt =~ s/\\201(.*?)\\202/\($1\)/g) {};
+      # STAS: don't want Euro signs instead of spaces in the pdf TOC
       $dh.="/h$nhd [($hind\\020\\020)($htxt)] D\n";
     }
     if($tocdoc) {
@@ -2252,7 +2247,7 @@ if($nimg>=0) {
 }
 @kw=split(/[, ]+/,$kw);
 @Kw=();
-for $i (@kw){push(@Kw,$i) if(!grep(/^$i$/,@Kw))};
+for $i (@kw){push(@Kw,$i) if(!grep(/^\Q$i\E$/,@Kw))};
 $kw=join(', ',@Kw);
 for $i (0..$#z2) {
   $n=0;
@@ -2308,7 +2303,7 @@ sub h2p {
     if($contyp!~m|text/html|i) {$_=" <plaintext>\n$_"};
     unless(($ba2)=$html=~m|(.*://.*/)|) {$ba2=$html."/"};
   } else {
-    if(open(FILE,$html)) {
+    if(open(FILE,"<$html")) {
       &dbg("Reading $html\n") if($opt_W || $opt_d);
       $_=<FILE>;
       if(!/<HTML/i && $html!~/html?$/i && ($html!~/\.ps$/i || $ndoc>1)) {
@@ -2424,7 +2419,7 @@ sub h2p {
     if($type=~/^text\/(html|plain)$/i
      || !$type && $uaddr=~m"(\.html?|://.+/|://[^/]+)$"i) {
       $tag=~/data\s*=\s*/i;
-      if(&open($uaddr,$idoc)) {
+      if(&open($uaddr,"<$idoc")) {
         if($type=~/plain/i) {
           $idoc="<XMP>$idoc</XMP>";
         } else {
@@ -2553,7 +2548,7 @@ sub Subst{
         } elsif($2 eq "virtual") {
           $file=$opt_r.$file;
         }
-        if(open INC,$file) {
+        if(open INC,"<$file") {
           $inc=<INC>;
           &spec($inc);
           close INC;
@@ -2709,6 +2704,7 @@ sub Subst{
   s|</[dD][eE][lL]>|)XE eM(|g;
   s|<[aA][cC][rR][oO][nN][yY][mM][^>]+[tT][iI][tT][lL][eE]\s*=\s*($S)[^>]*>|)($+)Ac(|g;
   s|</[aA][cC][rR][oO][nN][yY][mM]>|)Ca(|g;
+  s|<[sS][cC][rR][iI][pP][tT][\w\W]*?</[sS][cC][rR][iI][pP][tT]>||g;
   s|<[fF][oO][rR][mM][\w\W]*?</[fF][oO][rR][mM]>||g if(!$forms);
   s|</?[fF][oO][rR][mM]$R|)Ts BE(|g;
   s/<$s[^>]*[mM][uU][lL][tT][iI][pP][lL][eE]$R/)1 MS(<table>/g;
@@ -2721,7 +2717,7 @@ sub Subst{
     $rest=$';
     $it=2;
     if($iattr=~/type\s*=\s*["']?(\w+)/i) {$it=$it{"\L$1"}};
-    if($it<2) {
+    if(defined($it) && $it<2) {
       $it=($iattr=~/\schecked\W/i?1:0) ." $it";
     } elsif($it==2) {
       $siz=$iattr=~/size\s*=\s*["']?(\d+)/i?$1:12;
@@ -3086,7 +3082,7 @@ sub Subst{
         $dc=$rdc if($rdc || $rdc eq "0");
         $dc=$codc[$icol] if($codc[$icol] || $codc[$icol] eq "0");
         $dc=$cdc if($cdc || $cdc eq "0");
-        ($wid)=$cattr=~/WIDTH\s*=\s*["'](\d+%)/i;
+        ($wid)=$cattr=~/WIDTH\s*=\s*["'](\d+%?)/i;
         if($wid=~/%$/) {$wid=$`/100};
         if($wid>$cwid[$icol]) {$cwid[$icol]=$wid};
         if($cpad || $cpad eq "0") {
@@ -3436,7 +3432,7 @@ sub Getopts {
   @popts=split(/:/,$plist);
   while(@ARGV && ($_=$ARGV[0]) =~ /^-(.*)/) {
     $opt=$1;
-    if($opt=~/^-/ && $optalias{"\L$'"}) {$opt=$optalias{"\L$'"}};
+    if($opt=~/^-/ && $optalias{$'}) {$opt=$optalias{$'}};
     if($opt =~ /^[$olist]+$/) {
       while ($char=chop $opt) {eval "\$opt_$char=1"}
       shift(@ARGV);
@@ -3670,7 +3666,7 @@ sub pictops {
     if($opt_O) {
       $orig=$URL;
       unless($orig=~s/\.\w*$/.ps/) {$orig.=".ps"};
-      if(open(ORIG,"$orig")) {
+      if(open(ORIG,"<$orig")) {
         $pic=<ORIG>;
         close ORIG;
         if($pic=~/^%!/ && $pic=~/%%BoundingBox:/) {
@@ -3680,7 +3676,7 @@ sub pictops {
       }
     }
     if(!$flag) {
-      if(open(PIC,"$URL")) {
+      if(open(PIC,"<$URL")) {
         binmode PIC;
         $pic=<PIC>;
         close PIC;
@@ -3815,7 +3811,7 @@ sub DSC {
     $j=$op{$_}+1;
     $extra="";
     if(/showpage/) {$extra="Bb{Xl Yl Xh Yh}if Pn "};
-    if(/image/) {$extra="K ";$j++};
+    if(/image/) {$extra="K2 ";$j++};
     $t=$op{$_}?"$op{$_} copy $extra$in{$_} $j array astore":"[$extra$in{$_}]";
     $po.="/$_ {OU {$t ==} if $_}d\n";
   }
@@ -4101,7 +4097,7 @@ sub inihyph {
     $rep{$lang}=$refl{$hyfile};
     return;
   }
-  if(open(HYPH,$hyfile)) {
+  if(open(HYPH,"<$hyfile")) {
     &dbg("Reading hyphenation patterns from $hyfile\n") if($opt_d);
     <HYPH>=~/\\patterns{.*/;
     close HYPH;
@@ -4176,7 +4172,7 @@ sub inihyph {
   }
   $hext=$hyphenation_extfile{$lang};
   for(split('\s*:\s*',$hext)) {
-    if(open(HEXT,$_)) {
+    if(open(HEXT,"<$_")) {
       &dbg("Reading hyphenation extensions from $_\n") if($opt_d);
       $hyext.=<HEXT>;
       close HEXT;
@@ -4281,7 +4277,7 @@ sub fs {
 sub img {
   local($_,$red,$grn,$blu)=@_;
   local($beg,$end);
-  ($red,$grn,$blu)=("FF","FF","FF") if(!$opt_U);
+  ($red,$grn,$blu)=("FF","FF","FF") if(!$opt_U || $red.$grn.$blu !~ /^\w{6}$/);
   while (/<(img|fig|hr|overlay|object)\s/i) {
     $imgcmd="\L$1";
     $beg=$`;
@@ -4400,7 +4396,7 @@ sub getval{
 sub getconf {
   local($_)=@_;
   while(/\@import\s+(([\w.\/-]+)|"([^"]*)"|'([^']*)')\s*;/) {
-    if(open(SS,$+) && !$read{$+}) {
+    if(open(SS,"<$+") && !$read{$+}) {
       $conf=<SS>;
       $_=$`.$conf.$';
       print DBG "***** $+:\n$conf" if($opt_d);
@@ -4585,7 +4581,7 @@ sub hb {
 sub open {
   if($_[0]=~m|://|) {
     &geturl($_[0],$_[1]);
-  } elsif(open(FILE,$_[0])) {
+  } elsif(open(FILE,"<$_[0]")) {
     $_[1]=<FILE>;
     close FILE;
   } else {

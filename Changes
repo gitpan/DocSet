@@ -2,6 +2,12 @@
 
 Changes
 
+=head1 0.19 Sun Oct  2 23:22:01 PDT 2005
+
+- fix the =headX I<foo> rendering bug (the POD markup of the header
+  wasn't getting converted into html)
+
+
 =head1 0.18 Fri Sep  2 12:24:27 PDT 2005
 
 - a few style fixes [Philip M. Gollucci <pgollucci@p6m7g8.com>]
